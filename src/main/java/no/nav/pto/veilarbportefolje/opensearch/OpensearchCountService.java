@@ -1,11 +1,10 @@
 package no.nav.pto.veilarbportefolje.opensearch;
 
 
+import io.micrometer.core.instrument.MeterRegistry;
 import lombok.Data;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import no.nav.common.metrics.Event;
-import no.nav.common.metrics.MetricsClient;
 import no.nav.common.rest.client.RestUtils;
 import no.nav.pto.veilarbportefolje.opensearch.domene.OpensearchClientConfig;
 import okhttp3.OkHttpClient;
@@ -23,19 +22,18 @@ import static no.nav.common.rest.client.RestClient.baseClient;
 public class OpensearchCountService {
     private final OpensearchClientConfig opensearchClientConfig;
     private final String indexName;
-    private final MetricsClient metricsClient;
     private final OkHttpClient client;
+    private final MeterRegistry prometheusMeterRegistry;
 
     @Autowired
     public OpensearchCountService(
             OpensearchClientConfig opensearchClientConfig,
-            IndexName opensearchIndex,
-            MetricsClient metricsClient
+            IndexName opensearchIndex
     ) {
         this.opensearchClientConfig = opensearchClientConfig;
-        this.metricsClient = metricsClient;
         this.indexName = opensearchIndex.getValue();
         client = baseClient();
+        prometheusMeterRegistry = new MetricsReporter.ProtectedPrometheusMeterRegistry();
     }
 
     @SneakyThrows
@@ -53,16 +51,13 @@ public class OpensearchCountService {
                     .map(CountResponse::getCount)
                     .orElse(0L);
 
-            reportDocCountToInfluxdb(count);
+            reportDocCountToPrometheus(count);
             return count;
         }
     }
 
-    private void reportDocCountToInfluxdb(long count) {
-        Event event = new Event("portefolje.antall.brukere");
-        event.addFieldToReport("antall_brukere", count);
-
-        metricsClient.report(event);
+    private void reportDocCountToPrometheus(long count) {
+        prometheusMeterRegistry.gauge("portefolje.antall.brukere", count);
     }
 
     public static String createAbsoluteUrl(OpensearchClientConfig config, String indexName) {

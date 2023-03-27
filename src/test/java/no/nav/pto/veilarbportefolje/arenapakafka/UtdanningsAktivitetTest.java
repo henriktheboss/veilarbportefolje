@@ -22,6 +22,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
+import java.util.TimeZone;
 
 import static no.nav.pto.veilarbportefolje.arenapakafka.aktiviteter.UtdanningsAktivitetService.mapTilKafkaAktivitetMelding;
 import static no.nav.pto.veilarbportefolje.util.DateUtils.FAR_IN_THE_FUTURE_DATE;
@@ -39,7 +41,7 @@ public class UtdanningsAktivitetTest {
     private final Fnr fnr = Fnr.of("12345678912");
 
     @Autowired
-    public UtdanningsAktivitetTest(AktivitetService aktivitetService, AktivitetOpensearchService aktivitetOpensearchService,  JdbcTemplate jbPostgres) {
+    public UtdanningsAktivitetTest(AktivitetService aktivitetService, AktivitetOpensearchService aktivitetOpensearchService, JdbcTemplate jbPostgres) {
         this.aktivitetOpensearchService = aktivitetOpensearchService;
         this.jbPostgres = jbPostgres;
         this.aktivitetService = aktivitetService;
@@ -52,6 +54,7 @@ public class UtdanningsAktivitetTest {
 
     @BeforeEach
     public void reset() {
+        TimeZone.setDefault(TimeZone.getTimeZone(Optional.ofNullable(System.getenv("TZ")).orElse("Europe/Oslo")));
         jbPostgres.execute("truncate table aktiviteter");
         jbPostgres.execute("truncate table lest_arena_hendelse_aktivitet");
     }

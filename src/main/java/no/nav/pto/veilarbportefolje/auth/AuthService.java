@@ -8,8 +8,6 @@ import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 import no.nav.common.abac.Pep;
 import no.nav.common.abac.domain.request.ActionId;
-import no.nav.common.metrics.Event;
-import no.nav.common.metrics.MetricsClient;
 import no.nav.common.token_client.client.AzureAdOnBehalfOfTokenClient;
 import no.nav.common.types.identer.EnhetId;
 import no.nav.common.types.identer.Fnr;
@@ -40,15 +38,13 @@ public class AuthService {
     private final Pep veilarbPep;
     private final Cache<VeilederPaEnhet, Boolean> harVeilederTilgangTilEnhetCache;
     private final UnleashService unleashService;
-    private final MetricsClient metricsClient;
 
     @Autowired
-    public AuthService(Pep veilarbPep, PoaoTilgangWrapper poaoTilgangWrapper, AzureAdOnBehalfOfTokenClient aadOboTokenClient, UnleashService unleashService, MetricsClient metricsClient) {
+    public AuthService(Pep veilarbPep, PoaoTilgangWrapper poaoTilgangWrapper, AzureAdOnBehalfOfTokenClient aadOboTokenClient, UnleashService unleashService) {
         this.aadOboTokenClient = aadOboTokenClient;
         this.poaoTilgangWrapper = poaoTilgangWrapper;
         this.veilarbPep = veilarbPep;
         this.unleashService = unleashService;
-        this.metricsClient = metricsClient;
         this.harVeilederTilgangTilEnhetCache = Caffeine.newBuilder()
                 .expireAfterWrite(1, TimeUnit.HOURS)
                 .maximumSize(6000)
@@ -116,7 +112,7 @@ public class AuthService {
         if (FeatureToggle.brukPoaoTilgang(unleashService)) {
             Decision decision = poaoTilgangWrapper.harVeilederTilgangTilKode6();
             if (decision.isPermit() != abacResponse) {
-                metricsClient.report(new Event("poao-tilgang-diff").addTagToReport("method", "harVeilederTilgangTilKode6"));
+                log.info("poao-tilgang-diff: harVeilederTilgangTilKode6");
             }
         }
         return abacResponse;
@@ -127,7 +123,7 @@ public class AuthService {
         if (FeatureToggle.brukPoaoTilgang(unleashService)) {
             Decision decision = poaoTilgangWrapper.harVeilederTilgangTilKode7();
             if (decision.isPermit() != abacResponse) {
-                metricsClient.report(new Event("poao-tilgang-diff").addTagToReport("method", "harVeilederTilgangTilKode7"));
+                log.info("poao-tilgang-diff: harVeilederTilgangTilKode7");
             }
         }
         return abacResponse;

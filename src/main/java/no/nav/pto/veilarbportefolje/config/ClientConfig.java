@@ -9,8 +9,6 @@ import no.nav.common.client.aktoroppslag.CachedAktorOppslagClient;
 import no.nav.common.client.aktoroppslag.PdlAktorOppslagClient;
 import no.nav.common.client.pdl.PdlClient;
 import no.nav.common.client.pdl.PdlClientImpl;
-import no.nav.common.metrics.InfluxClient;
-import no.nav.common.metrics.MetricsClient;
 import no.nav.common.token_client.client.AzureAdMachineToMachineTokenClient;
 import no.nav.common.utils.Credentials;
 import no.nav.pto.veilarbportefolje.auth.AuthService;
@@ -33,11 +31,6 @@ public class ClientConfig {
     @Bean
     public PoaoTilgangWrapper poaoTilgangWrapper(AuthContextHolder authContextHolder, AzureAdMachineToMachineTokenClient tokenClient, EnvironmentProperties environmentProperties) {
         return new PoaoTilgangWrapper(authContextHolder, tokenClient, environmentProperties);
-    }
-
-    @Bean
-    public MetricsClient metricsClient() {
-        return new InfluxClient();
     }
 
     @Bean

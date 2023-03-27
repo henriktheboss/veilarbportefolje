@@ -1,10 +1,9 @@
 package no.nav.pto.veilarbportefolje.arbeidsliste;
 
+import io.micrometer.core.instrument.MeterRegistry;
 import io.vavr.control.Try;
 import io.vavr.control.Validation;
 import lombok.RequiredArgsConstructor;
-import no.nav.common.metrics.Event;
-import no.nav.common.metrics.MetricsClient;
 import no.nav.common.types.identer.AktorId;
 import no.nav.common.types.identer.EnhetId;
 import no.nav.common.types.identer.Fnr;
@@ -12,6 +11,7 @@ import no.nav.pto.veilarbportefolje.auth.AuthUtils;
 import no.nav.pto.veilarbportefolje.domene.AktorClient;
 import no.nav.pto.veilarbportefolje.domene.value.NavKontor;
 import no.nav.pto.veilarbportefolje.domene.value.VeilederId;
+import no.nav.pto.veilarbportefolje.opensearch.MetricsReporter;
 import no.nav.pto.veilarbportefolje.opensearch.OpensearchIndexerV2;
 import no.nav.pto.veilarbportefolje.service.BrukerServiceV2;
 import no.nav.pto.veilarbportefolje.util.ValideringsRegler;
@@ -37,7 +37,8 @@ public class ArbeidslisteService {
     private final ArbeidslisteRepositoryV2 arbeidslisteRepositoryPostgres;
     private final BrukerServiceV2 brukerServiceV2;
     private final OpensearchIndexerV2 opensearchIndexerV2;
-    private final MetricsClient metricsClient;
+
+    private final MeterRegistry prometheusMeterRegistry = new MetricsReporter.ProtectedPrometheusMeterRegistry();
 
     public Try<Arbeidsliste> getArbeidsliste(Fnr fnr) {
         return hentAktorId(fnr).map(this::getArbeidsliste).get();
@@ -52,8 +53,7 @@ public class ArbeidslisteService {
     }
 
     public Try<ArbeidslisteDTO> createArbeidsliste(ArbeidslisteDTO dto) {
-
-        metricsClient.report((new Event("arbeidsliste.opprettet")));
+        prometheusMeterRegistry.counter("arbeidsliste.opprettet.event").increment();
 
         Try<AktorId> aktoerId = hentAktorId(dto.getFnr());
         if (aktoerId.isFailure()) {
