@@ -11,7 +11,6 @@ import no.nav.pto.veilarbportefolje.auth.AuthUtils;
 import no.nav.pto.veilarbportefolje.domene.AktorClient;
 import no.nav.pto.veilarbportefolje.domene.value.NavKontor;
 import no.nav.pto.veilarbportefolje.domene.value.VeilederId;
-import no.nav.pto.veilarbportefolje.opensearch.MetricsReporter;
 import no.nav.pto.veilarbportefolje.opensearch.OpensearchIndexerV2;
 import no.nav.pto.veilarbportefolje.service.BrukerServiceV2;
 import no.nav.pto.veilarbportefolje.util.ValideringsRegler;
@@ -26,6 +25,7 @@ import java.util.Optional;
 import static io.vavr.control.Validation.invalid;
 import static io.vavr.control.Validation.valid;
 import static java.lang.String.format;
+import static no.nav.pto.veilarbportefolje.opensearch.MetricsReporter.getMeterRegistry;
 import static no.nav.pto.veilarbportefolje.util.SecureLog.secureLog;
 
 @Service
@@ -38,7 +38,7 @@ public class ArbeidslisteService {
     private final BrukerServiceV2 brukerServiceV2;
     private final OpensearchIndexerV2 opensearchIndexerV2;
 
-    private final MeterRegistry prometheusMeterRegistry = new MetricsReporter.ProtectedPrometheusMeterRegistry();
+    private final MeterRegistry prometheusMeterRegistry = getMeterRegistry();
 
     public Try<Arbeidsliste> getArbeidsliste(Fnr fnr) {
         return hentAktorId(fnr).map(this::getArbeidsliste).get();

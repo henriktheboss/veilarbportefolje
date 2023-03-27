@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.Base64;
 
 import static no.nav.common.rest.client.RestClient.baseClient;
+import static no.nav.pto.veilarbportefolje.opensearch.MetricsReporter.getMeterRegistry;
 
 @Slf4j
 @Service
@@ -33,7 +34,7 @@ public class OpensearchCountService {
         this.opensearchClientConfig = opensearchClientConfig;
         this.indexName = opensearchIndex.getValue();
         client = baseClient();
-        prometheusMeterRegistry = new MetricsReporter.ProtectedPrometheusMeterRegistry();
+        prometheusMeterRegistry = getMeterRegistry();
     }
 
     @SneakyThrows
