@@ -1,5 +1,6 @@
 package no.nav.pto.veilarbportefolje.arbeidsliste;
 
+import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.vavr.control.Try;
 import io.vavr.control.Validation;
@@ -38,7 +39,7 @@ public class ArbeidslisteService {
     private final BrukerServiceV2 brukerServiceV2;
     private final OpensearchIndexerV2 opensearchIndexerV2;
 
-    private final MeterRegistry prometheusMeterRegistry = getMeterRegistry();
+    private final MeterRegistry meterRegistry = getMeterRegistry();
 
     public Try<Arbeidsliste> getArbeidsliste(Fnr fnr) {
         return hentAktorId(fnr).map(this::getArbeidsliste).get();
@@ -53,7 +54,8 @@ public class ArbeidslisteService {
     }
 
     public Try<ArbeidslisteDTO> createArbeidsliste(ArbeidslisteDTO dto) {
-        prometheusMeterRegistry.counter("arbeidsliste.opprettet.event").increment();
+        Counter arbeidsListeOpprettet = Counter.builder("arbeidsliste.opprettet.event").register(meterRegistry);
+        arbeidsListeOpprettet.increment();
 
         Try<AktorId> aktoerId = hentAktorId(dto.getFnr());
         if (aktoerId.isFailure()) {

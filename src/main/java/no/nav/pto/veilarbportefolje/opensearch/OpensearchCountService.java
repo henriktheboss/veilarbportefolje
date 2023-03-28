@@ -1,7 +1,6 @@
 package no.nav.pto.veilarbportefolje.opensearch;
 
 
-import io.micrometer.core.instrument.Gauge;
 import io.micrometer.core.instrument.MeterRegistry;
 import lombok.Data;
 import lombok.SneakyThrows;
@@ -53,14 +52,8 @@ public class OpensearchCountService {
                     .map(CountResponse::getCount)
                     .orElse(0L);
 
-            reportDocCountToPrometheus(count);
             return count;
         }
-    }
-
-    private void reportDocCountToPrometheus(long count) {
-        Gauge.builder("portefolje.antall.brukere", () -> count)
-                .register(prometheusMeterRegistry);
     }
 
     public static String createAbsoluteUrl(OpensearchClientConfig config, String indexName) {

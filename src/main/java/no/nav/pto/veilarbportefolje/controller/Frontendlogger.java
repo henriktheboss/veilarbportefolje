@@ -43,7 +43,7 @@ public class Frontendlogger {
             secureLog.info("Skriver event til prometheus: " + eventToString(event.name));
         }
         Iterable<Tag> iterable = tags;
-        prometheusMeterRegistry.counter(event.name + ".event", iterable);
+        prometheusMeterRegistry.counter(event.name + ".event", iterable).increment();
     }
 
     @Data
