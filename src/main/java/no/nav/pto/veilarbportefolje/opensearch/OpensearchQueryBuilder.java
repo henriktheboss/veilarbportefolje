@@ -118,14 +118,24 @@ public class OpensearchQueryBuilder {
         Boolean tilgangTilKun6 = harTilgangKode6 && !harTilgangKode7;
         Boolean tilgangTil7 = !harTilgangKode6 && harTilgangKode7;
 
-        filterForBarnUnder18(boolQuery, tilgangTil6og7, tilgangTilKun6, tilgangTil7);
-
-        boolQuery.must(
-                rangeQuery("barn_under_18_aar.alder")
-                        .gte(fraAlder)
-                        .lte(tilAlder)
-
-        );
+        if (tilgangTil6og7) {
+            boolQuery.must(boolQuery().should(existsQuery("barn_under_18_aar"))
+                    .must(rangeQuery("barn_under_18_aar.alder").gte(fraAlder).lte(tilAlder)));
+        } else if (tilgangTilKun6) {
+            boolQuery.must(boolQuery()
+                    .should(matchQuery("barn_under_18_aar.diskresjonskode", "-1"))
+                    .should(matchQuery("barn_under_18_aar.diskresjonskode", "6"))
+                    .must(rangeQuery("barn_under_18_aar.alder").gte(fraAlder).lte(tilAlder)));
+        } else if (tilgangTil7) {
+            boolQuery.must(boolQuery()
+                    .should(matchQuery("barn_under_18_aar.diskresjonskode", "-1"))
+                    .should(matchQuery("barn_under_18_aar.diskresjonskode", "7"))
+                    .must(rangeQuery("barn_under_18_aar.alder").gte(fraAlder).lte(tilAlder)));
+        } else {
+            boolQuery.must(boolQuery()
+                    .must(matchQuery("barn_under_18_aar.diskresjonskode", "-1"))
+                    .must(rangeQuery("barn_under_18_aar.alder").gte(fraAlder).lte(tilAlder)));
+        }
     }
 
      private static void filterForBarnUnder18(BoolQueryBuilder boolQuery, Boolean tilgangTil6og7, Boolean tilgangTilKun6, Boolean tilgangTil7) {
