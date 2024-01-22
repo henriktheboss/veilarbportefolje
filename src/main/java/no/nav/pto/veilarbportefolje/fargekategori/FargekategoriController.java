@@ -1,12 +1,20 @@
 package no.nav.pto.veilarbportefolje.fargekategori;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import no.nav.common.types.identer.AktorId;
+import no.nav.common.types.identer.EnhetId;
+import no.nav.common.types.identer.Fnr;
 import no.nav.pto.veilarbportefolje.auth.AuthService;
 import no.nav.pto.veilarbportefolje.domene.RestResponse;
+import no.nav.pto.veilarbportefolje.domene.value.VeilederId;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.time.LocalDate;
 
 @Slf4j
 @RestController
@@ -38,19 +46,26 @@ public class FargekategoriController {
     }
 
 
-    public record HentFargekategoriRequest() {
+    public record HentFargekategoriRequest(Fnr fnr) {}
 
-    }
+    public record OpprettFargekategoriRequest(
+            Fnr fnr,
+            EnhetId enhetId,
+            AktorId aktorId,
+            VeilederId veilederId,
+            FargekategoriVerdi fargekategoriVerdi) {}
 
-    public record OpprettFargekategoriRequest() {
+    public record OppdaterFargekategoriRequest() {}
 
-    }
+    public record SlettFargekategoriRequest() {}
 
-    public record OppdaterFargekategoriRequest() {
-
-    }
-
-    public record SlettFargekategoriRequest() {
-
-    }
+    public record OpprettFargekategoriResponse(
+            String fargekategoriId,
+            Fnr brukerFnr,
+            EnhetId enhetId,
+            FargekategoriVerdi fargekategoriVerdi,
+            @JsonDeserialize(using = LocalDateDeserializer.class)
+            LocalDate endretDato,
+            String endretAv
+    ) {}
 }
