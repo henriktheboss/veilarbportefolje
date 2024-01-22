@@ -30,7 +30,7 @@ public class FargekategoriControllerTest {
 
 
     @Test
-    void test_at_endepunkt_returnerer_fargekategori_for_bruker() throws Exception {
+    void test_opprett_og_hent_fargekategori_for_bruker() throws Exception {
         HentFargekategoriRequest hentRequest = new HentFargekategoriRequest();
         mockMvc.perform(
                         post("/api/hent-fargekategori")
@@ -38,10 +38,6 @@ public class FargekategoriControllerTest {
                                 .content(toJson(hentRequest))
                 )
                 .andExpect(status().is(405));
-    }
-
-    @Test
-    void test_endepunkt_for_oppretting_av_fargekategori() throws Exception {
         OpprettFargekategoriRequest opprettRequest = new OpprettFargekategoriRequest();
         mockMvc.perform(
                         post("/api/fargekategori")
