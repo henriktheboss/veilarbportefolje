@@ -4,17 +4,16 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import no.nav.common.types.identer.AktorId;
 import no.nav.common.types.identer.EnhetId;
 import no.nav.common.types.identer.Fnr;
 import no.nav.pto.veilarbportefolje.auth.AuthService;
 import no.nav.pto.veilarbportefolje.domene.RestResponse;
-import no.nav.pto.veilarbportefolje.domene.value.VeilederId;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Slf4j
 @RestController
@@ -56,13 +55,12 @@ public class FargekategoriController {
 
     public record SlettFargekategoriRequest() {}
 
-    public record OpprettFargekategoriResponse(
+    public record HentFargekategoriResponse(
             String fargekategoriId,
             Fnr brukerFnr,
-            EnhetId enhetId,
             FargekategoriVerdi fargekategoriVerdi,
             @JsonDeserialize(using = LocalDateDeserializer.class)
-            LocalDate endretDato,
+            LocalDateTime endretDato,
             String endretAv
     ) {}
 }

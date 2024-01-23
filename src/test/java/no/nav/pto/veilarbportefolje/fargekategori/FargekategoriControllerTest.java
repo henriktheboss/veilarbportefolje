@@ -16,6 +16,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import static no.nav.common.json.JsonUtils.fromJson;
 import static no.nav.common.json.JsonUtils.toJson;
@@ -56,12 +57,11 @@ public class FargekategoriControllerTest {
                 .andReturn().getResponse().getContentAsString();
 
         HentFargekategoriRequest hentFargekategoriForBrukerRequest = new HentFargekategoriRequest(fnr);
-        OpprettFargekategoriResponse expected = new OpprettFargekategoriResponse(
+        HentFargekategoriResponse expected = new HentFargekategoriResponse(
                 opprettetFargekategoriId,
                 fnr,
-                enhetId,
                 fargekategoriVerdi,
-                LocalDate.now(),
+                LocalDateTime.now(),
                 veilederId.getValue()
         );
 
@@ -74,11 +74,10 @@ public class FargekategoriControllerTest {
                 .andExpect(status().is(405))
                 .andReturn().getResponse().getContentAsString();
 
-        OpprettFargekategoriResponse hentetFargekategoriBody = fromJson(hentFargekategoriResult, OpprettFargekategoriResponse.class);
+        HentFargekategoriResponse hentetFargekategoriBody = fromJson(hentFargekategoriResult, HentFargekategoriResponse.class);
 
         assertThat(hentetFargekategoriBody.fargekategoriId()).isEqualTo(expected.fargekategoriId());
         assertThat(hentetFargekategoriBody.brukerFnr()).isEqualTo(expected.brukerFnr());
-        assertThat(hentetFargekategoriBody.enhetId()).isEqualTo(expected.enhetId());
         assertThat(hentetFargekategoriBody.fargekategoriVerdi()).isEqualTo(expected.fargekategoriVerdi());
         assertThat(hentetFargekategoriBody.endretDato()).isEqualTo(expected.endretDato());
         assertThat(hentetFargekategoriBody.endretAv()).isEqualTo(expected.endretAv());
