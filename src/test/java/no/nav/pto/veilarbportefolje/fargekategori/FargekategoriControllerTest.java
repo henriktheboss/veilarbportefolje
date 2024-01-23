@@ -17,9 +17,9 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
 
-//import static no.nav.common.json.JsonUtils.fromJson;
+import static no.nav.common.json.JsonUtils.fromJson;
 import static no.nav.common.json.JsonUtils.toJson;
-//import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -45,7 +45,7 @@ public class FargekategoriControllerTest {
         testDataClient.lagreBrukerUnderOppfolging(aktorId, fnr, NavKontor.of(enhetId.get()), veilederId);
         FargekategoriVerdi fargekategoriVerdi = FargekategoriVerdi.GUL;
 
-        OpprettFargekategoriRequest opprettRequest = new OpprettFargekategoriRequest(fnr, enhetId, aktorId, veilederId, fargekategoriVerdi);
+        OpprettFargekategoriRequest opprettRequest = new OpprettFargekategoriRequest(fnr, fargekategoriVerdi);
         String opprettetFargekategoriId = mockMvc.perform(
                         post("/api/fargekategori")
                                 .contentType(APPLICATION_JSON)
@@ -74,14 +74,14 @@ public class FargekategoriControllerTest {
                 .andExpect(status().is(405))
                 .andReturn().getResponse().getContentAsString();
 
-//        OpprettFargekategoriResponse hentetFargekategoriBody = fromJson(hentFargekategoriResult, OpprettFargekategoriResponse.class);
-//
-//        assertThat(hentetFargekategoriBody.fargekategoriId()).isEqualTo(expected.fargekategoriId());
-//        assertThat(hentetFargekategoriBody.brukerFnr()).isEqualTo(expected.brukerFnr());
-//        assertThat(hentetFargekategoriBody.enhetId()).isEqualTo(expected.enhetId());
-//        assertThat(hentetFargekategoriBody.fargekategoriVerdi()).isEqualTo(expected.fargekategoriVerdi());
-//        assertThat(hentetFargekategoriBody.endretDato()).isEqualTo(expected.endretDato());
-//        assertThat(hentetFargekategoriBody.endretAv()).isEqualTo(expected.endretAv());
+        OpprettFargekategoriResponse hentetFargekategoriBody = fromJson(hentFargekategoriResult, OpprettFargekategoriResponse.class);
+
+        assertThat(hentetFargekategoriBody.fargekategoriId()).isEqualTo(expected.fargekategoriId());
+        assertThat(hentetFargekategoriBody.brukerFnr()).isEqualTo(expected.brukerFnr());
+        assertThat(hentetFargekategoriBody.enhetId()).isEqualTo(expected.enhetId());
+        assertThat(hentetFargekategoriBody.fargekategoriVerdi()).isEqualTo(expected.fargekategoriVerdi());
+        assertThat(hentetFargekategoriBody.endretDato()).isEqualTo(expected.endretDato());
+        assertThat(hentetFargekategoriBody.endretAv()).isEqualTo(expected.endretAv());
     }
 
     @Test

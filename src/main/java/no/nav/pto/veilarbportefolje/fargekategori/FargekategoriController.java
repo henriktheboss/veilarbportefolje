@@ -50,9 +50,6 @@ public class FargekategoriController {
 
     public record OpprettFargekategoriRequest(
             Fnr fnr,
-            EnhetId enhetId,
-            AktorId aktorId,
-            VeilederId veilederId,
             FargekategoriVerdi fargekategoriVerdi) {}
 
     public record OppdaterFargekategoriRequest() {}
