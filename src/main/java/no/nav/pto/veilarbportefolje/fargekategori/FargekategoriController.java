@@ -34,26 +34,11 @@ public class FargekategoriController {
         throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED);
     }
 
-    @PutMapping("/fargekategori")
-    public RestResponse oppdaterFargekategori(@RequestBody OppdaterFargekategoriRequest request) {
-        throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED);
-    }
-
-    @DeleteMapping("/fargekategori")
-    public RestResponse slettFargekategori(@RequestBody SlettFargekategoriRequest request) {
-        throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED);
-    }
-
-
     public record HentFargekategoriRequest(Fnr fnr) {}
 
     public record OpprettFargekategoriRequest(
             Fnr fnr,
             FargekategoriVerdi fargekategoriVerdi) {}
-
-    public record OppdaterFargekategoriRequest() {}
-
-    public record SlettFargekategoriRequest() {}
 
     public record HentFargekategoriResponse(
             String fargekategoriId,

@@ -85,23 +85,11 @@ public class FargekategoriControllerTest {
 
     @Test
     void test_oppdatering_av_fargekategori() throws Exception {
-        OppdaterFargekategoriRequest oppdaterRequest = new OppdaterFargekategoriRequest();
-        mockMvc.perform(
-                        put("/api/fargekategori")
-                                .contentType(APPLICATION_JSON)
-                                .content(toJson(oppdaterRequest))
-                )
-                .andExpect(status().is(405));
+
     }
 
     @Test
     void test_sletting_av_fargekategori() throws Exception {
-        SlettFargekategoriRequest slettRequest = new SlettFargekategoriRequest();
-        mockMvc.perform(
-                        put("/api/fargekategori")
-                                .contentType(APPLICATION_JSON)
-                                .content(toJson(slettRequest))
-                )
-                .andExpect(status().is(405));
+
     }
 }
