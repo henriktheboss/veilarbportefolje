@@ -23,7 +23,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 @RequiredArgsConstructor
 public class SchemaController {
 
-    @Value("classpath:json-schema:filtervalg.json")
+    @Value("classpath:json-schema/filtervalg.json")
     private Resource filtervalgSchema;
 
     @GetMapping("/filtervalg")
