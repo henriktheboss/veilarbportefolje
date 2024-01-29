@@ -31,7 +31,7 @@ public class SchemaController {
         try (Reader reader = new InputStreamReader(filtervalgSchema.getInputStream(), UTF_8)) {
             return ResponseEntity.ok(FileCopyUtils.copyToString(reader));
         } catch (IOException e) {
-            log.warn("Can't read json schema for: filter valg");
+            log.warn("Can't read json schema for: filter valg", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
