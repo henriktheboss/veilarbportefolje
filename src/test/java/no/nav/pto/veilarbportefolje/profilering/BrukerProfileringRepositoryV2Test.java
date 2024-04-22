@@ -13,9 +13,9 @@ import static no.nav.pto.veilarbportefolje.util.DateUtils.now;
 import static no.nav.pto.veilarbportefolje.util.DateUtils.nowToStr;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ProfileringRepositoryV2Test {
+public class BrukerProfileringRepositoryV2Test {
     private JdbcTemplate db;
-    private ProfileringRepositoryV2 profileringRepositoryV2;
+    private BrukerProfileringRepositoryV2 brukerProfileringRepositoryV2;
 
     private static String AKTORID = "123456789";
     private static String AKTORID1 = "1234567892";
@@ -23,7 +23,7 @@ public class ProfileringRepositoryV2Test {
     @Before
     public void setup() {
         db = SingletonPostgresContainer.init().createJdbcTemplate();
-        profileringRepositoryV2 = new ProfileringRepositoryV2(db);
+        brukerProfileringRepositoryV2 = new BrukerProfileringRepositoryV2(db);
     }
 
     @Test
@@ -34,8 +34,8 @@ public class ProfileringRepositoryV2Test {
                 .setProfileringGjennomfort(nowToStr())
                 .build();
 
-        profileringRepositoryV2.upsertBrukerProfilering(arbeidssokerProfilertEvent);
-        assertThat(profileringRepositoryV2.hentBrukerProfilering(AktorId.of(AKTORID)).get()).isEqualTo(arbeidssokerProfilertEvent);
+        brukerProfileringRepositoryV2.upsertBrukerProfilering(arbeidssokerProfilertEvent);
+        assertThat(brukerProfileringRepositoryV2.hentBrukerProfilering(AktorId.of(AKTORID)).get()).isEqualTo(arbeidssokerProfilertEvent);
     }
 
     @Test
@@ -46,7 +46,7 @@ public class ProfileringRepositoryV2Test {
                 .setProfileringGjennomfort(now().minusDays(30).format(ISO_ZONED_DATE_TIME))
                 .build();
 
-        profileringRepositoryV2.upsertBrukerProfilering(event1);
+        brukerProfileringRepositoryV2.upsertBrukerProfilering(event1);
 
         ArbeidssokerProfilertEvent event2 = ArbeidssokerProfilertEvent.newBuilder()
                 .setAktorid(AKTORID1)
@@ -54,8 +54,8 @@ public class ProfileringRepositoryV2Test {
                 .setProfileringGjennomfort(nowToStr())
                 .build();
 
-        profileringRepositoryV2.upsertBrukerProfilering(event2);
-        assertThat(profileringRepositoryV2.hentBrukerProfilering(AktorId.of(AKTORID1)).get()).isEqualTo(event2);
+        brukerProfileringRepositoryV2.upsertBrukerProfilering(event2);
+        assertThat(brukerProfileringRepositoryV2.hentBrukerProfilering(AktorId.of(AKTORID1)).get()).isEqualTo(event2);
 
     }
 }

@@ -12,11 +12,11 @@ import static no.nav.pto.veilarbportefolje.util.SecureLog.secureLog;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class ProfileringService extends KafkaCommonConsumerService<ArbeidssokerProfilertEvent> {
-    private final ProfileringRepositoryV2 profileringRepositoryV2;
+public class BrukerProfileringService extends KafkaCommonConsumerService<ArbeidssokerProfilertEvent> {
+    private final BrukerProfileringRepositoryV2 brukerProfileringRepositoryV2;
 
     public void behandleKafkaMeldingLogikk(ArbeidssokerProfilertEvent kafkaMelding) {
-        profileringRepositoryV2.upsertBrukerProfilering(kafkaMelding);
+        brukerProfileringRepositoryV2.upsertBrukerProfilering(kafkaMelding);
         secureLog.info("Oppdaterer brukerprofilering i postgres for: {}, {}, {}", kafkaMelding.getAktorid(), kafkaMelding.getProfilertTil().name(), DateUtils.zonedDateStringToTimestamp(kafkaMelding.getProfileringGjennomfort()));
     }
 }

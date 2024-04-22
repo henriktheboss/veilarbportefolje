@@ -42,7 +42,7 @@ import no.nav.pto.veilarbportefolje.oppfolging.*;
 import no.nav.pto.veilarbportefolje.oppfolgingsbruker.OppfolgingsbrukerServiceV2;
 import no.nav.pto.veilarbportefolje.persononinfo.PdlBrukerdataKafkaService;
 import no.nav.pto.veilarbportefolje.persononinfo.PdlResponses.PdlDokument;
-import no.nav.pto.veilarbportefolje.profilering.ProfileringService;
+import no.nav.pto.veilarbportefolje.profilering.BrukerProfileringService;
 import no.nav.pto.veilarbportefolje.registrering.RegistreringService;
 import no.nav.pto.veilarbportefolje.registrering.endring.EndringIRegistreringService;
 import no.nav.pto.veilarbportefolje.siste14aVedtak.Siste14aVedtakKafkaDto;
@@ -138,7 +138,7 @@ public class KafkaConfigCommon {
 
     public KafkaConfigCommon(CVService cvService,
                              SistLestService sistLestService, RegistreringService registreringService, EndringIRegistreringService endringIRegistreringService,
-                             ProfileringService profileringService, AktivitetService aktivitetService,
+                             BrukerProfileringService brukerProfileringService, AktivitetService aktivitetService,
                              Utkast14aStatusendringService utkast14aStatusendringService, Siste14aVedtakService siste14aVedtakService,
                              DialogService dialogService, ManuellStatusService manuellStatusService,
                              NyForVeilederService nyForVeilederService, VeilederTilordnetService veilederTilordnetService,
@@ -219,7 +219,7 @@ public class KafkaConfigCommon {
                                         Topic.AIVEN_PROFILERING_TOPIC.topicName,
                                         Deserializers.stringDeserializer(),
                                         new AivenAvroDeserializer<ArbeidssokerProfilertEvent>().getDeserializer(),
-                                        profileringService::behandleKafkaRecord
+                                        brukerProfileringService::behandleKafkaRecord
                                 ),
                         new KafkaConsumerClientBuilder.TopicConfig<String, YtelsesDTO>()
                                 .withLogging()
