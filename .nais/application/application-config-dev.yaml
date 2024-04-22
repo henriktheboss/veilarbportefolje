@@ -97,6 +97,10 @@ spec:
       value: "http://veilarbarena.pto.svc.nais.local/veilarbarena"
     - name: VEILARBARENA_TOKEN_SCOPE
       value: "api://dev-fss.pto.veilarbarena/.default"
+    - name: OPPSLAG_ARBEIDSSOEKERREGISTERET_URL
+      value: "https://oppslag-arbeidssoekerregisteret.intern.dev.nav.no"
+    - name: OPPSLAG_ARBEIDSSOEKERREGISTERET_SCOPE
+      value: "api://dev-gcp.paw.paw-arbeidssoekerregisteret-api-oppslag/.default"
     - name: PDL_URL
       value: "http://pdl-api.pdl.svc.nais.local"
     - name: PDL_TOKEN_SCOPE

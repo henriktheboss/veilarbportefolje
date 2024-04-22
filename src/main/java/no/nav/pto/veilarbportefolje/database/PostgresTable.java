@@ -233,6 +233,15 @@ public class PostgresTable {
         public static final String PROFILERING_TIDSPUNKT = "PROFILERING_TIDSPUNKT";
     }
 
+    public static final class SISTE_ARBEIDSSOKER_PERIODE {
+
+            private SISTE_ARBEIDSSOKER_PERIODE() { /* no-op */ }
+
+            public static final String TABLE_NAME = "SISTE_ARBEIDSSOKER_PERIODE";
+            public static final String ARBEIDSSOKER_PERIODE_ID = "ARBEIDSSOKER_PERIODE_ID";
+            public static final String FNR = "FNR";
+    }
+
     public static final class BRUKER_REGISTRERING {
 
         private BRUKER_REGISTRERING() { /* no-op */ }

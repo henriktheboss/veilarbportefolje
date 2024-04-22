@@ -27,6 +27,8 @@ public class EnvironmentProperties {
     private String veilarbveilederScope;
     private String veilarbarenaUrl;
     private String veilarbarenaScope;
+    private String oppslagArbeidssoekerregisteretScope;
+    private String oppslagArbeidssoekerregisteretUrl;
     private String pdlUrl;
     private String pdlScope;
     private String poaoTilgangUrl;
