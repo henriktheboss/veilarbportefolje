@@ -85,7 +85,7 @@ public class BrukerRepositoryV2 {
                                  LEFT JOIN DIALOG DI ON DI.AKTOERID = ai.aktorid
                                  LEFT JOIN UTKAST_14A_STATUS U on U.AKTOERID = ai.aktorid
                                  LEFT JOIN ARBEIDSLISTE ARB on ARB.AKTOERID = ai.aktorid
-                                 LEFT JOIN BRUKER_PROFILERING BP ON BP.AKTOERID = ai.aktorid
+                                 LEFT JOIN BRUKER_PROFILERING_V2 BP ON BP.fnr = ai.fnr
                                  LEFT JOIN BRUKER_CV CV on CV.AKTOERID = ai.aktorid
                                  LEFT JOIN BRUKER_REGISTRERING BR on BR.AKTOERID = ai.aktorid
                                  LEFT JOIN YTELSE_STATUS_FOR_BRUKER YB on YB.AKTOERID = ai.aktorid

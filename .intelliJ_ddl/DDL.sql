@@ -174,6 +174,18 @@ CREATE TABLE public.bruker_profilering (
 
 
 --
+-- Name: bruker_profilering_v2; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.bruker_profilering_v2 (
+    fnr character varying(11) NOT NULL,
+    periodeid uuid NOT NULL,
+    profilering_resultat character varying(40),
+    profilering_tidspunkt timestamp without time zone
+);
+
+
+--
 -- Name: bruker_registrering; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -830,6 +842,14 @@ ALTER TABLE ONLY public.bruker_identer
 
 ALTER TABLE ONLY public.bruker_profilering
     ADD CONSTRAINT bruker_profilering_pkey PRIMARY KEY (aktoerid);
+
+
+--
+-- Name: bruker_profilering_v2 bruker_profilering_v2_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.bruker_profilering_v2
+    ADD CONSTRAINT bruker_profilering_v2_pkey PRIMARY KEY (fnr, periodeid);
 
 
 --

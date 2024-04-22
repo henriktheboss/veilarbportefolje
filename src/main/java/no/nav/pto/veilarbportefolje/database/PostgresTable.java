@@ -221,6 +221,18 @@ public class PostgresTable {
         public static final String PROFILERING_TIDSPUNKT = "PROFILERING_TIDSPUNKT";
     }
 
+    public static final class BRUKER_PROFILERING_V2 {
+
+        private BRUKER_PROFILERING_V2() { /* no-op */ }
+
+        public static final String TABLE_NAME = "BRUKER_PROFILERING_V2";
+        public static final String FNR = "FNR";
+        public static final String PERIODEID = "PERIODEID";
+
+        public static final String PROFILERING_RESULTAT = "PROFILERING_RESULTAT";
+        public static final String PROFILERING_TIDSPUNKT = "PROFILERING_TIDSPUNKT";
+    }
+
     public static final class BRUKER_REGISTRERING {
 
         private BRUKER_REGISTRERING() { /* no-op */ }

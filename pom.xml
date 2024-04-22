@@ -249,6 +249,11 @@
             <artifactId>client</artifactId>
             <version>2024.02.20_07.34-4dbbf67d478e</version>
         </dependency>
+        <dependency>
+            <groupId>no.nav.paw.arbeidssokerregisteret.api</groupId>
+            <artifactId>main-avro-schema</artifactId>
+            <version>1.8657441125.42-1</version>
+        </dependency>
 
         <!--Logging-->
         <dependency>
@@ -376,6 +381,10 @@
                 <repository>
                     <id>jitpack</id>
                     <url>https://jitpack.io</url>
+                </repository>
+                <repository>
+                    <id>github-package-registry-mirror</id>
+                    <url>https://github-package-registry-mirror.gc.nav.no/cached/maven-release</url>
                 </repository>
             </repositories>
         </profile>
