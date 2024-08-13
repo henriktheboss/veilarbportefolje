@@ -46,11 +46,13 @@ public class FargekategoriService {
     private void slettIOpensearch(Fnr fnr) {
         AktorId aktorId = Optional.ofNullable(pdlIdentRepository.hentAktorIdForAktivBruker(fnr)).orElseThrow(RuntimeException::new);
         opensearchIndexerV2.slettFargekategori(aktorId);
+        opensearchIndexerV2.updateArbeidslistekategori(aktorId, null);
     }
 
     private void oppdaterIOpensearch(Fnr fnr, String fargekategori, String enhetId) {
         AktorId aktorId = Optional.ofNullable(pdlIdentRepository.hentAktorIdForAktivBruker(fnr)).orElseThrow(RuntimeException::new);
         opensearchIndexerV2.updateFargekategori(aktorId, fargekategori, enhetId);
+        opensearchIndexerV2.updateArbeidslistekategori(aktorId, fargekategori);
     }
 
     public void slettFargekategoriPaaBruker(AktorId aktorId, Optional<Fnr> maybeFnr) {

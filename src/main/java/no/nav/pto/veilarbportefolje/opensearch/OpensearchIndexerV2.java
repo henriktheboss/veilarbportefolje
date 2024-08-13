@@ -298,6 +298,33 @@ public class OpensearchIndexerV2 {
     }
 
     @SneakyThrows
+    public void updateArbeidslistekategori(AktorId aktorId, String fargekategori) {
+        if(fargekategori == null) {
+            final XContentBuilder content = jsonBuilder()
+                    .startObject()
+                    .nullField("arbeidsliste_kategori")
+                    .endObject();
+
+            update(aktorId, content, "fjerner arbeidsliste kategori");
+        } else {
+            String kategori = switch(fargekategori){
+                case "FARGEKATEGORI_A" -> "BLA";
+                case "FARGEKATEGORI_B" -> "GRONN";
+                case "FARGEKATEGORI_C" -> "GUL";
+                case "FARGEKATEGORI_D" -> "LILLA";
+                default -> null;
+            };
+
+            final XContentBuilder content = jsonBuilder()
+                    .startObject()
+                    .field("arbeidsliste_kategori", kategori)
+                    .endObject();
+
+            update(aktorId, content, format("Oppdatert arbeidsliste kategori til: %s", kategori));
+        }
+    }
+
+    @SneakyThrows
     public void slettArbeidsliste(AktorId aktoerId) {
         final XContentBuilder content = jsonBuilder()
                 .startObject()
