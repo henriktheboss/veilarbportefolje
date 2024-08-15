@@ -156,6 +156,20 @@ public class PostgresTable {
         public static final String STATUS = "STATUS";
     }
 
+    public static final class VAAS {
+
+        private VAAS() { /* no-op */ }
+
+        public static final String TABLE_NAME = "vaas";
+        public static final String HENDELSE_ID = "hendelse_id";
+        public static final String IDENT = "ident";
+        public static final String AVSENDER = "avsender";
+        public static final String OPPRETTET = "opprettet";
+        public static final String HENDELSE_NAVN = "hendelse_navn";
+        public static final String HENDELSE_LENK = "hendelse_lenk";
+        public static final String TILTAKSTYPE_KODE = "tiltakstype_kode";
+    }
+
     public static final class UTKAST_14A_STATUS {
 
         private UTKAST_14A_STATUS() { /* no-op */ }
