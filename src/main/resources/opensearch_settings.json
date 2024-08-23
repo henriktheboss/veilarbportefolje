@@ -15,7 +15,6 @@
       },
       "analyzer": {
         "fullt_navn_sok": {
-          "tokenizer": "fullt_navn_sok_tokenizer",
           "filter": [
             "lowercase",
             "spesialtegnfolding"
